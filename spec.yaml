@@ -7,7 +7,1374 @@ servers:
   description: The default server
 - url: http://crapi.com:8888
   description: The default server
-paths: {}
+paths:
+  /identity/api/auth/signup:
+    post:
+      summary: POST signup
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: User registered successfully! Please Login.
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                name:
+                  type: string
+                email:
+                  type: string
+                number:
+                  type: string
+                password:
+                  type: string
+            example:
+              name: testuser
+              email: user@test.com
+              number: '0786543898'
+              password: Test#1234
+  /identity/api/auth/login:
+    post:
+      summary: POST login
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                  type:
+                    type: string
+                  message:
+                    type: string
+                  mfaRequired:
+                    type: boolean
+              example:
+                token: 
+                  eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiaWF0IjoxNzgwMjE0MDk2LCJleHAiOjE3ODA4MTg4OTYsInJvbGUiOiJ1c2VyIn0.aPoU3-HWZKUwQb11cjE0zCtNNn70LBQVFI-l6YKG34k-e8pdsCxluZ1Y0IjceMNZkLk8DSmP-QdzyFNgsLnXZ4HPOCZpTMh4KpiBrQrRe-cMbzKHsvZ9zEPUkNTHbXDwe3Ye5YB1L3RhL7stU-6pq0SNXe01TEYIZH-Cg9rx-b4z7Ut187hPnCw08y_KO12y9uVFbXko74cRqw1OWjs_vDRw2XCQFfxU9xCOTxT5l4GSAbp4qYdyLc6S03lnXKFweYXi-dDjKeyGaN93vNQPTyYMxtb2Pnjb_xbWz0xSwFGG1xiN0GDgFvi05jG1mLog2hoJhRGgr1ZwRZXCnk94qQ
+                type: Bearer
+                message: Login successful
+                mfaRequired: false
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                email:
+                  type: string
+                password:
+                  type: string
+            example:
+              email: user@test.com
+              password: Test#1234
+  /identity/api/v2/user/dashboard:
+    get:
+      summary: GET dashboard
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  email:
+                    type: string
+                  number:
+                    type: string
+                  picture_url:
+                    type: object
+                    nullable: true
+                  video_url:
+                    type: object
+                    nullable: true
+                  video_name:
+                    type: object
+                    nullable: true
+                  available_credit:
+                    type: number
+                  video_id:
+                    type: number
+                  role:
+                    type: string
+              example:
+                id: 10
+                name: testuser
+                email: user@test.com
+                number: '0786543898'
+                picture_url:
+                video_url:
+                video_name:
+                available_credit: 100.0
+                video_id: 0
+                role: ROLE_USER
+  /identity/api/auth/verify:
+    post:
+      summary: POST verify
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: The token is a valid JWT token
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                token:
+                  type: string
+            example:
+              token: 
+                eyJhbGciOiJSUzI1NiJ9.eyJzdWIiOiJ1c2VyQHRlc3QuY29tIiwiaWF0IjoxNzgwMjE0MDk2LCJleHAiOjE3ODA4MTg4OTYsInJvbGUiOiJ1c2VyIn0.aPoU3-HWZKUwQb11cjE0zCtNNn70LBQVFI-l6YKG34k-e8pdsCxluZ1Y0IjceMNZkLk8DSmP-QdzyFNgsLnXZ4HPOCZpTMh4KpiBrQrRe-cMbzKHsvZ9zEPUkNTHbXDwe3Ye5YB1L3RhL7stU-6pq0SNXe01TEYIZH-Cg9rx-b4z7Ut187hPnCw08y_KO12y9uVFbXko74cRqw1OWjs_vDRw2XCQFfxU9xCOTxT5l4GSAbp4qYdyLc6S03lnXKFweYXi-dDjKeyGaN93vNQPTyYMxtb2Pnjb_xbWz0xSwFGG1xiN0GDgFvi05jG1mLog2hoJhRGgr1ZwRZXCnk94qQ
+  /community/api/v2/community/posts/recent:
+    get:
+      summary: GET recent
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  posts:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        title:
+                          type: string
+                        content:
+                          type: string
+                        author:
+                          type: object
+                          properties:
+                            nickname:
+                              type: string
+                            email:
+                              type: string
+                            vehicleid:
+                              type: string
+                            profile_pic_url:
+                              type: string
+                            created_at:
+                              type: string
+                        comments:
+                          type: array
+                          items: {}
+                        authorid:
+                          type: number
+                        CreatedAt:
+                          type: string
+                  next_offset:
+                    type: object
+                    nullable: true
+                  previous_offset:
+                    type: object
+                    nullable: true
+                  total:
+                    type: number
+              example:
+                posts:
+                - id: 3723SBKqV4tUMKjAePEcNa
+                  title: Title 3
+                  content: Hello world 3
+                  author:
+                    nickname: Robot
+                    email: robot001@example.com
+                    vehicleid: 4bae9968-ec7f-4de3-a3a0-ba1b2ab5e5e5
+                    profile_pic_url: ''
+                    created_at: '2026-05-31T07:30:05.327Z'
+                  comments: []
+                  authorid: 3
+                  CreatedAt: '2026-05-31T07:30:05.327Z'
+                - id: TcTLUVBLU3StfVi47L7C2S
+                  title: Title 2
+                  content: Hello world 2
+                  author:
+                    nickname: Pogba
+                    email: pogba006@example.com
+                    vehicleid: cd515c12-0fc1-48ae-8b61-9230b70a845b
+                    profile_pic_url: ''
+                    created_at: '2026-05-31T07:30:05.326Z'
+                  comments: []
+                  authorid: 2
+                  CreatedAt: '2026-05-31T07:30:05.326Z'
+                - id: 8UD7DfMh9sVEhkD4JwqN6g
+                  title: Title 1
+                  content: Hello world 1
+                  author:
+                    nickname: Adam
+                    email: adam007@example.com
+                    vehicleid: f89b5f21-7829-45cb-a650-299a61090378
+                    profile_pic_url: ''
+                    created_at: '2026-05-31T07:30:05.316Z'
+                  comments: []
+                  authorid: 1
+                  CreatedAt: '2026-05-31T07:30:05.316Z'
+                next_offset:
+                previous_offset:
+                total: 3
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: number
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: number
+  /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa:
+    get:
+      summary: GET 3723sbkqv4tumkjaepecna
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  content:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      nickname:
+                        type: string
+                      email:
+                        type: string
+                      vehicleid:
+                        type: string
+                      profile_pic_url:
+                        type: string
+                      created_at:
+                        type: string
+                  comments:
+                    type: array
+                    items: {}
+                  authorid:
+                    type: number
+                  CreatedAt:
+                    type: string
+              example:
+                id: 3723SBKqV4tUMKjAePEcNa
+                title: Title 3
+                content: Hello world 3
+                author:
+                  nickname: Robot
+                  email: robot001@example.com
+                  vehicleid: 4bae9968-ec7f-4de3-a3a0-ba1b2ab5e5e5
+                  profile_pic_url: ''
+                  created_at: '2026-05-31T07:30:05.327Z'
+                comments: []
+                authorid: 3
+                CreatedAt: '2026-05-31T07:30:05.327Z'
+  /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa/comment:
+    post:
+      summary: POST comment
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  content:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      nickname:
+                        type: string
+                      email:
+                        type: string
+                      vehicleid:
+                        type: string
+                      profile_pic_url:
+                        type: string
+                      created_at:
+                        type: string
+                  comments:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: string
+                        content:
+                          type: string
+                        CreatedAt:
+                          type: string
+                        author:
+                          type: object
+                          properties:
+                            nickname:
+                              type: string
+                            email:
+                              type: string
+                            vehicleid:
+                              type: string
+                            profile_pic_url:
+                              type: string
+                            created_at:
+                              type: string
+                  authorid:
+                    type: number
+                  CreatedAt:
+                    type: string
+              example:
+                id: 3723SBKqV4tUMKjAePEcNa
+                title: Title 3
+                content: Hello world 3
+                author:
+                  nickname: Robot
+                  email: robot001@example.com
+                  vehicleid: 4bae9968-ec7f-4de3-a3a0-ba1b2ab5e5e5
+                  profile_pic_url: ''
+                  created_at: '2026-05-31T07:30:05.327Z'
+                comments:
+                - id: ''
+                  content: thisis great
+                  CreatedAt: '2026-05-31T07:57:40.76768308Z'
+                  author:
+                    nickname: testuser
+                    email: user@test.com
+                    vehicleid: ''
+                    profile_pic_url: ''
+                    created_at: '2026-05-31T07:57:40.76768291Z'
+                authorid: 3
+                CreatedAt: '2026-05-31T07:30:05.327Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                content:
+                  type: string
+            example:
+              content: thisis great
+  /community/api/v2/coupon/validate-coupon:
+    post:
+      summary: POST validate-coupon
+      responses:
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                type: object
+                properties: {}
+              example: {}
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                coupon_code:
+                  type: string
+            example:
+              coupon_code: '12345'
+  /community/api/v2/community/posts:
+    post:
+      summary: POST posts
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+                  title:
+                    type: string
+                  content:
+                    type: string
+                  author:
+                    type: object
+                    properties:
+                      nickname:
+                        type: string
+                      email:
+                        type: string
+                      vehicleid:
+                        type: string
+                      profile_pic_url:
+                        type: string
+                      created_at:
+                        type: string
+                  comments:
+                    type: array
+                    items: {}
+                  authorid:
+                    type: number
+                  CreatedAt:
+                    type: string
+              example:
+                id: Db87HuRNtfd7o6qtFLinoY
+                title: this is ok
+                content: This going great
+                author:
+                  nickname: testuser
+                  email: user@test.com
+                  vehicleid: f0c8fc83-d3dd-4260-9a0f-c4c1c051ddfd
+                  profile_pic_url: ''
+                  created_at: '2026-05-31T08:02:55.790570459Z'
+                comments: []
+                authorid: 10
+                CreatedAt: '2026-05-31T08:02:55.79057057Z'
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                title:
+                  type: string
+                content:
+                  type: string
+            example:
+              title: this is ok
+              content: This going great
+  /identity/api/v2/user/change-email:
+    post:
+      summary: POST change-email
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: The token has been sent to your email. If you have used example.com
+                  email, check your email using the MailHog web portal.   user2@test.com
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_email:
+                  type: string
+                new_email:
+                  type: string
+            example:
+              old_email: user@test.com
+              new_email: user2@test.com
+  /identity/api/v2/user/verify-email-token:
+    post:
+      summary: POST verify-email-token
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: 'Your Email changed successful. Please login with updated
+                  email. '
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                new_email:
+                  type: string
+                token:
+                  type: string
+            example:
+              new_email: user2@test.com
+              token: E8R5V4c8k4m2S4U8N8e8
+  /identity/api/v2/user/change-phone-number:
+    post:
+      summary: POST change-phone-number
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: The otp has been sent to your email. If you have used example.com
+                  email, check your email using the MailHog web portal.0467366272
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_number:
+                  type: string
+                new_number:
+                  type: string
+            example:
+              old_number: '0786543898'
+              new_number: '0467366272'
+  /identity/api/v2/user/pictures:
+    post:
+      summary: POST pictures
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  name:
+                    type: string
+                  status:
+                    type: string
+                  available_credit:
+                    type: number
+                  user:
+                    type: object
+                    nullable: true
+                  picture:
+                    type: string
+              example:
+                id: 10
+                name: testuser
+                status: ACTIVE
+                available_credit: 90.0
+                user:
+                picture: 
+                  data:image/jpeg;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0iVVRGLTgiIHN0YW5kYWxvbmU9Im5vIj8+CjwhLS0gQ3JlYXRlZCB3aXRoIElua3NjYXBlIChodHRwOi8vd3d3Lmlua3NjYXBlLm9yZy8pIC0tPgoKPHN2ZwogICB4bWxuczpkYz0iaHR0cDovL3B1cmwub3JnL2RjL2VsZW1lbnRzLzEuMS8iCiAgIHhtbG5zOmNjPSJodHRwOi8vY3JlYXRpdmVjb21tb25zLm9yZy9ucyMiCiAgIHhtbG5zOnJkZj0iaHR0cDovL3d3dy53My5vcmcvMTk5OS8wMi8yMi1yZGYtc3ludGF4LW5zIyIKICAgeG1sbnM6c3ZnPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyIKICAgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIgogICB4bWxuczp4bGluaz0iaHR0cDovL3d3dy53My5vcmcvMTk5OS94bGluayIKICAgeG1sbnM6c29kaXBvZGk9Imh0dHA6Ly9zb2RpcG9kaS5zb3VyY2Vmb3JnZS5uZXQvRFREL3NvZGlwb2RpLTAuZHRkIgogICB4bWxuczppbmtzY2FwZT0iaHR0cDovL3d3dy5pbmtzY2FwZS5vcmcvbmFtZXNwYWNlcy9pbmtzY2FwZSIKICAgaWQ9InN2ZzI4MzciCiAgIHZlcnNpb249IjEuMSIKICAgaW5rc2NhcGU6dmVyc2lvbj0iMC40N3ByZTQgcjIyNDQ2IgogICB3aWR0aD0iNDgiCiAgIGhlaWdodD0iNDgiCiAgIHZpZXdCb3g9IjAgMCA0OCA0OCIKICAgeG1sOnNwYWNlPSJwcmVzZXJ2ZSIKICAgc29kaXBvZGk6ZG9jbmFtZT0iMjR4MjQuc3ZnIj48bWV0YWRhdGEKICAgICBpZD0ibWV0YWRhdGEyODQzIj48cmRmOlJERj48Y2M6V29yawogICAgICAgICByZGY6YWJvdXQ9IiI+PGRjOmZvcm1hdD5pbWFnZS9zdmcreG1sPC9kYzpmb3JtYXQ+PGRjOnR5cGUKICAgICAgICAgICByZGY6cmVzb3VyY2U9Imh0dHA6Ly9wdXJsLm9yZy9kYy9kY21pdHlwZS9TdGlsbEltYWdlIiAvPjxkYzp0aXRsZT48L2RjOnRpdGxlPjwvY2M6V29yaz48L3JkZjpSREY+PC9tZXRhZGF0YT48ZGVmcwogICAgIGlkPSJkZWZzMjg0MSI+PGlua3NjYXBlOnBlcnNwZWN0aXZlCiAgICAgICBzb2RpcG9kaTp0eXBlPSJpbmtzY2FwZTpwZXJzcDNkIgogICAgICAgaW5rc2NhcGU6dnBfeD0iMCA6IDAuNSA6IDEiCiAgICAgICBpbmtzY2FwZTp2cF95PSIwIDogMTAwMCA6IDAiCiAgICAgICBpbmtzY2FwZTp2cF96PSIxIDogMC41IDogMSIKICAgICAgIGlua3NjYXBlOnBlcnNwM2Qtb3JpZ2luPSIwLjUgOiAwLjMzMzMzMzMzIDogMSIKICAgICAgIGlkPSJwZXJzcGVjdGl2ZTI4NDUiIC8+PGxpbmVhckdyYWRpZW50CiAgICAgICB4MT0iMCIKICAgICAgIHkxPSIwIgogICAgICAgeDI9IjEiCiAgICAgICB5Mj0iMCIKICAgICAgIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIgogICAgICAgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtNy45OTk4MzIyLDc2LjY2NTQ4Miw3Ni42NjU0ODIsNy45OTk4MzIyLDIzMS42NDc5NSwyNjAuOTg0MzcpIgogICAgICAgc3ByZWFkTWV0aG9kPSJwYWQiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQyODYxIj48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1vcGFjaXR5OjE7c3RvcC1jb2xvcjojZjg5NzM0IgogICAgICAgICBvZmZzZXQ9IjAiCiAgICAgICAgIGlkPSJzdG9wMjg2MyIgLz48c3RvcAogICAgICAgICBzdHlsZT0ic3RvcC1vcGFjaXR5OjE7c3RvcC1jb2xvcjojZmJiMzcxIgogICAgICAgICBvZmZzZXQ9IjEiCiAgICAgICAgIGlkPSJzdG9wMjg2NSIgLz48L2xpbmVhckdyYWRpZW50PjxyYWRpYWxHcmFkaWVudAogICAgICAgZng9IjAiCiAgICAgICBmeT0iMCIKICAgICAgIGN4PSIwIgogICAgICAgY3k9IjAiCiAgICAgICByPSIxIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDUwLjk1OTM1MSwyMy43NjE5MTcsMjMuMDkyODA0LC00OS41MjU1MjgsMjA4LjAzMzY5LDMwMy4wODI1MikiCiAgICAgICBzcHJlYWRNZXRob2Q9InBhZCIKICAgICAgIGlkPSJyYWRpYWxHcmFkaWVudDI4ODEiPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLW9wYWNpdHk6MTtzdG9wLWNvbG9yOiNlOWVhZWIiCiAgICAgICAgIG9mZnNldD0iMCIKICAgICAgICAgaWQ9InN0b3AyODgzIiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLW9wYWNpdHk6MTtzdG9wLWNvbG9yOiM4Mzg0ODciCiAgICAgICAgIG9mZnNldD0iMSIKICAgICAgICAgaWQ9InN0b3AyODg1IiAvPjwvcmFkaWFsR3JhZGllbnQ+PGNsaXBQYXRoCiAgICAgICBjbGlwUGF0aFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIKICAgICAgIGlkPSJjbGlwUGF0aDI4OTMiPjxwYXRoCiAgICAgICAgIGQ9Ik0gMCw1NzYgNTc2LDU3NiA1NzYsMCAwLDAgMCw1NzYgeiIKICAgICAgICAgaWQ9InBhdGgyODk1IiAvPjwvY2xpcFBhdGg+PGxpbmVhckdyYWRpZW50CiAgICAgICB4MT0iMCIKICAgICAgIHkxPSIwIgogICAgICAgeDI9IjEiCiAgICAgICB5Mj0iMCIKICAgICAgIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIgogICAgICAgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgzNC4yODI2NTQsLTE1LjcyNzU4NSwtMTUuNzI3NTg1LC0zNC4yODI2NTQsMjEzLjgwOTA4LDMyMC40MzIxMykiCiAgICAgICBzcHJlYWRNZXRob2Q9InBhZCIKICAgICAgIGlkPSJsaW5lYXJHcmFkaWVudDI5NTMiPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLW9wYWNpdHk6MTtzdG9wLWNvbG9yOiNmYWE4NTgiCiAgICAgICAgIG9mZnNldD0iMCIKICAgICAgICAgaWQ9InN0b3AyOTU1IiAvPjxzdG9wCiAgICAgICAgIHN0eWxlPSJzdG9wLW9wYWNpdHk6MTtzdG9wLWNvbG9yOiNmYmIzNzEiCiAgICAgICAgIG9mZnNldD0iMSIKICAgICAgICAgaWQ9InN0b3AyOTU3IiAvPjwvbGluZWFyR3JhZGllbnQ+PGNsaXBQYXRoCiAgICAgICBjbGlwUGF0aFVuaXRzPSJ1c2VyU3BhY2VPblVzZSIKICAgICAgIGlkPSJjbGlwUGF0aDI5NjUiPjxwYXRoCiAgICAgICAgIGQ9Ik0gMCw1NzYgNTc2LDU3NiA1NzYsMCAwLDAgMCw1NzYgeiIKICAgICAgICAgaWQ9InBhdGgyOTY3IiAvPjwvY2xpcFBhdGg+PGxpbmVhckdyYWRpZW50CiAgICAgICBpbmtzY2FwZTpjb2xsZWN0PSJhbHdheXMiCiAgICAgICB4bGluazpocmVmPSIjbGluZWFyR3JhZGllbnQyODYxIgogICAgICAgaWQ9ImxpbmVhckdyYWRpZW50MjkxNyIKICAgICAgIGdyYWRpZW50VW5pdHM9InVzZXJTcGFjZU9uVXNlIgogICAgICAgZ3JhZGllbnRUcmFuc2Zvcm09Im1hdHJpeCgtNy45OTk4MzIyLDc2LjY2NTQ4Miw3Ni42NjU0ODIsNy45OTk4MzIyLDIzMS42NDc5NSwyNjAuOTg0MzcpIgogICAgICAgc3ByZWFkTWV0aG9kPSJwYWQiCiAgICAgICB4MT0iMCIKICAgICAgIHkxPSIwIgogICAgICAgeDI9IjEiCiAgICAgICB5Mj0iMCIgLz48cmFkaWFsR3JhZGllbnQKICAgICAgIGlua3NjYXBlOmNvbGxlY3Q9ImFsd2F5cyIKICAgICAgIHhsaW5rOmhyZWY9IiNyYWRpYWxHcmFkaWVudDI4ODEiCiAgICAgICBpZD0icmFkaWFsR3JhZGllbnQyOTE5IgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDUwLjk1OTM1MSwyMy43NjE5MTcsMjMuMDkyODA0LC00OS41MjU1MjgsMjA4LjAzMzY5LDMwMy4wODI1MikiCiAgICAgICBzcHJlYWRNZXRob2Q9InBhZCIKICAgICAgIGN4PSIwIgogICAgICAgY3k9IjAiCiAgICAgICBmeD0iMCIKICAgICAgIGZ5PSIwIgogICAgICAgcj0iMSIgLz48bGluZWFyR3JhZGllbnQKICAgICAgIGlua3NjYXBlOmNvbGxlY3Q9ImFsd2F5cyIKICAgICAgIHhsaW5rOmhyZWY9IiNsaW5lYXJHcmFkaWVudDI5NTMiCiAgICAgICBpZD0ibGluZWFyR3JhZGllbnQyOTIxIgogICAgICAgZ3JhZGllbnRVbml0cz0idXNlclNwYWNlT25Vc2UiCiAgICAgICBncmFkaWVudFRyYW5zZm9ybT0ibWF0cml4KDM0LjI4MjY1NCwtMTUuNzI3NTg1LC0xNS43Mjc1ODUsLTM0LjI4MjY1NCwyMTMuODA5MDgsMzIwLjQzMjEzKSIKICAgICAgIHNwcmVhZE1ldGhvZD0icGFkIgogICAgICAgeDE9IjAiCiAgICAgICB5MT0iMCIKICAgICAgIHgyPSIxIgogICAgICAgeTI9IjAiIC8+PC9kZWZzPjxzb2RpcG9kaTpuYW1lZHZpZXcKICAgICBwYWdlY29sb3I9IiNmZmZmZmYiCiAgICAgYm9yZGVyY29sb3I9IiM2NjY2NjYiCiAgICAgYm9yZGVyb3BhY2l0eT0iMSIKICAgICBvYmplY3R0b2xlcmFuY2U9IjEwIgogICAgIGdyaWR0b2xlcmFuY2U9IjEwIgogICAgIGd1aWRldG9sZXJhbmNlPSIxMCIKICAgICBpbmtzY2FwZTpwYWdlb3BhY2l0eT0iMCIKICAgICBpbmtzY2FwZTpwYWdlc2hhZG93PSIyIgogICAgIGlua3NjYXBlOndpbmRvdy13aWR0aD0iMTE1MiIKICAgICBpbmtzY2FwZTp3aW5kb3ctaGVpZ2h0PSI3OTMiCiAgICAgaWQ9Im5hbWVkdmlldzI4MzkiCiAgICAgc2hvd2dyaWQ9ImZhbHNlIgogICAgIGlua3NjYXBlOnpvb209IjIuNjIyMjIyMiIKICAgICBpbmtzY2FwZTpjeD0iMTM1Ljg4NTg0IgogICAgIGlua3NjYXBlOmN5PSIyNy40MDQxNjMiCiAgICAgaW5rc2NhcGU6d2luZG93LXg9IjAiCiAgICAgaW5rc2NhcGU6d2luZG93LXk9IjI1IgogICAgIGlua3NjYXBlOndpbmRvdy1tYXhpbWl6ZWQ9IjEiCiAgICAgaW5rc2NhcGU6Y3VycmVudC1sYXllcj0iZzI4NDciCiAgICAgaW5rc2NhcGU6c2hvd3BhZ2VzaGFkb3c9ImZhbHNlIgogICAgIHNob3dib3JkZXI9ImZhbHNlIiAvPjxnCiAgICAgaWQ9ImcyODQ3IgogICAgIGlua3NjYXBlOmdyb3VwbW9kZT0ibGF5ZXIiCiAgICAgaW5rc2NhcGU6bGFiZWw9IkZPWFlsb2dvIgogICAgIHRyYW5zZm9ybT0ibWF0cml4KDEuMjUsMCwwLC0xLjI1LC0yMjQuMTE0MTUsMzcwLjg5MjM3KSI+PGcKICAgICAgIGlkPSJnMjg3MCIKICAgICAgIHRyYW5zZm9ybT0ibWF0cml4KDAuNDI2ODc2OTMsMCwwLDAuNDI2ODc2OTMsMTAyLjc1NTk5LDE0OC45OTc2NykiPjxnCiAgICAgICAgIGlkPSJnMjg0OSI+PGcKICAgICAgICAgICBpZD0iZzI4NTEiPjxnCiAgICAgICAgICAgICBpZD0iZzI4NTciPjxnCiAgICAgICAgICAgICAgIGlkPSJnMjg1OSI+PHBhdGgKICAgICAgICAgICAgICAgICBpZD0icGF0aDI4NjciCiAgICAgICAgICAgICAgICAgc3R5bGU9ImZpbGw6dXJsKCNsaW5lYXJHcmFkaWVudDI5MTcpO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICAgIGQ9Im0gMTg1Ljc5NywzMDAuNTI3IGMgMCwtMjIuMzk2IDE4LjY4MSwtNDAuNTUyIDQxLjcyNSwtNDAuNTUyIGwgMCwwIGMgMjMuMDQ0LDAgNDEuNzI1LDE4LjE1NiA0MS43MjUsNDAuNTUyIGwgMCwwIGMgMCwyMi4zOTcgLTE4LjY4MSw0MC41NTQgLTQxLjcyNSw0MC41NTQgbCAwLDAgYyAtMjMuMDQ0LDAgLTQxLjcyNSwtMTguMTU3IC00MS43MjUsLTQwLjU1NCIgLz48L2c+PC9nPjwvZz48L2c+PGcKICAgICAgICAgaWQ9ImcyODY5Ij48ZwogICAgICAgICAgIGlkPSJnMjg3MSI+PGcKICAgICAgICAgICAgIGlkPSJnMjg3NyI+PGcKICAgICAgICAgICAgICAgaWQ9ImcyODc5Ij48cGF0aAogICAgICAgICAgICAgICAgIGlkPSJwYXRoMjg4NyIKICAgICAgICAgICAgICAgICBzdHlsZT0iZmlsbDp1cmwoI3JhZGlhbEdyYWRpZW50MjkxOSk7c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICAgICAgZD0ibSAyMTEuOTQzLDMzMy45NCBjIC0xOC45ODgsLTguODU0IC0yNy40MDMsLTMwLjk5IC0xOC43OTgsLTQ5LjQ0MyBsIDAsMCBjIDguNjA0LC0xOC40NTMgMzAuOTcxLC0yNi4yMzQgNDkuOTU4LC0xNy4zODEgbCAwLDAgYyAxOC45ODYsOC44NTQgMjcuNDAxLDMwLjk5IDE4Ljc5Nyw0OS40NDIgbCAwLDAgYyAtNi4xOTQsMTMuMjg0IC0xOS41MTgsMjEuMDM3IC0zMy41OCwyMS4wMzcgbCAwLDAgYyAtNS40NzMsMCAtMTEuMDU4LC0xLjE3NSAtMTYuMzc3LC0zLjY1NSIgLz48L2c+PC9nPjwvZz48L2c+PGcKICAgICAgICAgaWQ9ImcyODg5Ij48ZwogICAgICAgICAgIGNsaXAtcGF0aD0idXJsKCNjbGlwUGF0aDI4OTMpIgogICAgICAgICAgIGlkPSJnMjg5MSI+PGcKICAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2MS45MDA0LDMxNi41NTc2KSIKICAgICAgICAgICAgIGlkPSJnMjg5NyI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyODk5IgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDpub25lO3N0cm9rZTojZmZmZmZmO3N0cm9rZS13aWR0aDoxLjc2OTk5OTk4O3N0cm9rZS1saW5lY2FwOmJ1dHQ7c3Ryb2tlLWxpbmVqb2luOm1pdGVyO3N0cm9rZS1taXRlcmxpbWl0OjQ7c3Ryb2tlLW9wYWNpdHk6MTtzdHJva2UtZGFzaGFycmF5Om5vbmUiCiAgICAgICAgICAgICAgIGQ9Im0gMCwwIGMgOC42MDQsLTE4LjQ1MSAwLjE4OCwtNDAuNTg4IC0xOC43OTgsLTQ5LjQ0MSAtMTguOTg2LC04Ljg1NCAtNDEuMzUzLC0xLjA3MiAtNDkuOTU4LDE3LjM4IC04LjYwNSwxOC40NTQgLTAuMTg5LDQwLjU4OSAxOC43OTgsNDkuNDQzIEMgLTMwLjk3MiwyNi4yMzUgLTguNjA1LDE4LjQ1NCAwLDAgeiIgLz48L2c+PGcKICAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI1My45MDYzLDMyMy45MjA5KSIKICAgICAgICAgICAgIGlkPSJnMjkwMSI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyOTAzIgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJtIDAsMCBjIC0wLjM4LDYuOTAzIC0xLjg1NCwxNS4zMzQgLTYuNTMzLDIwLjgwNiAtMy41MDcsNC4xMDMgLTguOTc4LC03Ljg1NyAtMTAuMTAzLC05LjY2OSAtMS4zOCwtMi4yMjEgLTIuNzA2LC00Ljk4NCAtNC44LC02LjYwNSAtMi45NDUsLTIuMjgxIC02LjQzMSwtMi4zNzIgLTkuODMzLC0zLjQ5OSAtNS4zOTEsLTEuNzg5IC0xMC42ODgsLTQuNTcgLTE0LjkzOCwtOC4zNjkgLTUuMjE0LC00LjY2IC0xMC4xNTQsLTQuMTI0IC0xNi42NywtMy42NDkgLTIuNzExLDAuMTk5IC0xMi44NDksMi40MDYgLTExLjA0LC0zLjM0OCAyLjE5MiwtNi45NzMgNy43NzgsLTEyLjg1MiAxMy4zODYsLTE3LjI0OCA1LjMwMiwtNC4xNTggMi45NDYsLTguOTI2IC0yLjU4OSwtMTEuNTAzIDUuNzIsLTcuODI5IDE3LjI2NywtOC45MTQgMjYuMDEsLTcuNCA0Ljc2NiwwLjgyNiA5LjI3OCwxLjA4OCAxNC4wMzksLTAuMDUyIDMuNTMzLC0wLjg0NSA3Ljc1MiwtNC4zOTkgMTEuNDksLTIuNTA3IDMuNTA2LDEuNzExIDMuMDk4LDUuNzQ4IDQuMDk2LDguOTQgMS40MDksNC40OTkgNC4xOTMsOC41NjcgNy41MTksMTEuODU4IDYuODEyLDYuNzQzIDE0LjEzOCwxNi41ODkgMTAuODAzLDI2LjkgQyA1LjE1NSwtOC41MDYgLTAuMTg5LC03LjAxNSAwLDAiIC8+PC9nPjxnCiAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyMTUuNzM2OCwzMjEuNjk5MikiCiAgICAgICAgICAgICBpZD0iZzI5MDUiPjxwYXRoCiAgICAgICAgICAgICAgIGlkPSJwYXRoMjkwNyIKICAgICAgICAgICAgICAgc3R5bGU9ImZpbGw6I2Y4OTczNDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIKICAgICAgICAgICAgICAgZD0ibSAwLDAgYyAwLDAgMTEuOTg1LDUuNzY1IDIxLjc4NCw1LjE0NiAwLDAgNy41NzMsLTIuMTA3IDExLjkyNywtNC4xIDAsMCA2LjE5MSwtNC45NjQgNy4yMDEsLTguNjYzIDAsMCAyLjkzOCwtOC41MTEgLTcuMTg2LC0xOS4yOTggMCwwIC01LjA5NSwtNi41MjMgLTYuMzAyLC0xMi43NTcgMCwwIC0wLjA5MiwtNC4xODkgLTIuNTMsLTUuNjUxIDAsMCAtNC4wMTksLTEuMTQxIC02Ljk3MSwwLjUxNCAtMi4zOTMsMC42NzggLTQuODQ0LDEuMjE0IC03LjI5OCwxLjYyNiAtNS42ODQsMC45NTQgLTExLjQ2LDAuMDA2IC0xNy4xNTksMS4wNjEgLTQuNjU5LDAuODU5IC0xMC41MzQsMi45NTYgLTExLjc5Niw4LjEzNSAwLDAgLTIuODg4LDIuNTY1IDAuNzk4LDEzLjU3OCAwLDAgMi4wMDEsMTIuMzU3IDE3LjUzMiwyMC40MDkiIC8+PC9nPjxnCiAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgxOTYuNTA1OSwyOTUuOTg3OCkiCiAgICAgICAgICAgICBpZD0iZzI5MDkiPjxwYXRoCiAgICAgICAgICAgICAgIGlkPSJwYXRoMjkxMSIKICAgICAgICAgICAgICAgc3R5bGU9ImZpbGw6IzVjNWQ1ZDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIKICAgICAgICAgICAgICAgZD0ibSAwLDAgYyAyLjY3OSwtMS4wMTEgNC4xNzksLTIuNjM2IDEwLjc4MiwtMS45MTUgMy4wNTUsMC4zMzQgNS43MjMsMy4yNjkgOC44NzcsMi40NzYgOC41MzUsLTIuMTUyIDIyLjc1MiwtMTcuNjIxIDIyLjIyMiwtMTguMTYzIC0wLjk1NSwtMC43NjEgLTExLjU1NSwxNC4yIC0xOS4xMzYsMTAuODQyIC0xLjgwOSwtMC44IC00LjU1MSwtMi41MDcgLTYuNTM0LC0yLjAyMyAtMC45NTgsMC4yMzcgLTEuNzkyLDAuNjg2IC0yLjUyLDEuMzU4IC0wLjk2LDAuODkgLTEuNjQyLDIuNzMxIC0yLjkxLDMuMjM1IC0xLjcyOCwwLjY4OCAtMy4xMiwwLjc4NCAtNC45MTQsMS4xNjcgLTEuOTI5LDAuNDEyIC0zLjkzOCwxLjI2MiAtNS40MzYsMi41MTgiIC8+PC9nPjxnCiAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNDMuMDk2NywyNzkuODc4OSkiCiAgICAgICAgICAgICBpZD0iZzI5MTMiPjxwYXRoCiAgICAgICAgICAgICAgIGlkPSJwYXRoMjkxNSIKICAgICAgICAgICAgICAgc3R5bGU9ImZpbGw6IzVjNWQ1ZDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIKICAgICAgICAgICAgICAgZD0ibSAwLDAgYyAwLjcxNCwtMS4yNiAtMC40MzgsLTQuMTQyIC0wLjk4NCwtNC40NSAtMC41NDQsLTAuMzA5IC0zLjc0NSwwLjEwNiAtNC40NTksMS4zNjcgLTAuNzEzLDEuMjU4IDAuMzI3LDIuMjYzIDEuODMsMy4xMTQgQyAtMi4xMDksMC44ODMgLTAuNzEzLDEuMjU5IDAsMCIgLz48L2c+PGcKICAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIwNi44OTY1LDMwMi4xNzc3KSIKICAgICAgICAgICAgIGlkPSJnMjkxNyI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyOTE5IgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojNWM1ZDVkO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJNIDAsMCBDIC0wLjg3MiwxLjE1NSAyLjExLDMuNTkgMi43MzMsMy42NDYgMy4zNTcsMy43MDEgNi4xMDEsMi4wMDMgNi4yMzEsMC41NjIgNi4zNjEsLTAuODc5IDMuOTQ0LDAuNjc3IDIuMjIzLDAuNTIzIDAuNTAyLDAuMzY3IDAuMzY5LC0wLjQ5IDAsMCIgLz48L2c+PGcKICAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDI2Mi4wODY0LDMxMS40MTQxKSIKICAgICAgICAgICAgIGlkPSJnMjkyMSI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyOTIzIgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojNWM1ZDVkO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJtIDAsMCBjIC0wLjY3NywtOS43MSAtNS4xNiwtMTQuNTk0IC0xMC44NjIsLTIxLjkwOCAtMy4wMTIsLTMuODYxIC01LjAxNywtOC4wMDUgLTYuMDY3LC0xMi43NjYgLTAuNjUzLC0yLjk1NSAtMi45OTgsLTUuMzk2IC02LjE4NywtNS4yOTYgLTMuNTY0LDAuMTE0IC02LjkyOCwyLjIzIC0xMC40ODcsMi44NjIgLTQuNjQxLDAuODI2IC05LjE2MiwwLjExMyAtMTMuODAxLC0wLjIwNiAtNC42NzEsLTAuMzIxIC04Ljk4NSwwLjQ3NSAtMTMuMTI3LDIuNjg2IC0wLjA2OSwwLjAzNiAtNi44MjMsNC40MDMgLTYuNDc2LDQuNjQ5IDQuOTE2LDMuNDYzIDIuNTI4LDguNDU4IC0xLjUxMSwxMS4zNzEgLTUuMzQ5LDMuODU3IC0xMC42MDMsMTAuMDU1IC0xMi44NDEsMTYuMzY1IC0xLjI1NCwzLjUzOSAxMi43NzYsMC40MTYgMTQuMjQ1LC0wLjIzIDQuOTU2LC0yLjE4MiAyLjE4NCwtOS41MDQgMS40MzEsLTEzLjI5IDEuNTYyLDEuOTgyIDEuOTE2LDQuOTk5IDIuNzQ3LDcuMzM4IDEuMjQ0LDMuNTAxIDIuNzE2LDcuMDYxIDUuMzg5LDkuNzI4IDMuNDE5LDMuNDE1IDcuNTM3LDUuOTY2IDExLjgyLDguMTUgNS4wNTEsMi41NzggOS45ODMsNC44MyAxNS42NTEsNS40MzYgNC4xNTUsMC40NDEgNy44MjksLTAuMDU1IDExLjY4MiwtMS42NzUgMC42MjEsLTAuMjY0IDQuODA3LC0yLjE0OCA1LjgxNSwtMS44OTggLTMuMzkzLDEuMjA4IC0xMC41NjksNC40NDYgLTkuNTU1LDkuMTY0IDAuMzM4LDEuNTY3IDUuNjIsMTQuNTQ1IDcuNzQ4LDExLjQ1NSAzLjc5NywtNS41MTQgNS43MzMsLTEzLjQwOCA1LjcxOCwtMjAuMDAyIEMgLTguNjgsNi45NTQgLTYuMDM3LDIuMDg5IC0wLjM0OCw0LjAzNyAtMC4zODQsNC4wMjUgMC4wMjgsMC40MTIgMCwwIG0gLTcuOTE1LDEyLjc0OSBjIC0wLjM4NCw2Ljk3MyAtMS44NzQsMTUuNDg4IC02LjU5OCwyMS4wMTYgLTMuNTQ0LDQuMTQ1IC05LjA3LC03LjkzNyAtMTAuMjA2LC05Ljc2NyAtMS4zOTQsLTIuMjQzIC0yLjczMiwtNS4wMzMgLTQuODQ5LC02LjY3MiAtMi45NzQsLTIuMzA1IC02LjQ5NSwtMi4zOTUgLTkuOTMxLC0zLjUzNSAtNS40NDYsLTEuODA4IC0xMC43OTcsLTQuNjE3IC0xNS4wODksLTguNDUzIC01LjI2NywtNC43MDcgLTEwLjI1OCwtNC4xNjUgLTE2LjgzOSwtMy42ODYgLTIuNzM5LDAuMjAxIC0xMi45NzksMi40MjkgLTExLjE1MSwtMy4zODIgMi4yMTMsLTcuMDQyIDcuODU2LC0xMi45OCAxMy41MiwtMTcuNDIxIDUuMzU1LC00LjE5OSAyLjk3NiwtOS4wMTYgLTIuNjE1LC0xMS42MiA1Ljc3OCwtNy45MDggMTcuNDQzLC05LjAwNCAyNi4yNzMsLTcuNDc0IDQuODE1LDAuODM0IDkuMzcyLDEuMDk2IDE0LjE4LC0wLjA1NCAzLjU3LC0wLjg1MSA3LjgzMSwtNC40NDIgMTEuNjA3LC0yLjUzMSAzLjU0MSwxLjcyOCAzLjEyOSw1LjgwNiA0LjEzOSw5LjAzMSAxLjQyMiw0LjU0MyA0LjIzNCw4LjY1MiA3LjU5NCwxMS45NzcgQyAtMSwtMTMuMDExIDYuNCwtMy4wNjUgMy4wMzIsNy4zNTIgLTIuNzA4LDQuMTU1IC04LjEwNyw1LjY2MyAtNy45MTUsMTIuNzQ5IiAvPjwvZz48ZwogICAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjQwLjkyNjgsMzExLjQwNTgpIgogICAgICAgICAgICAgaWQ9ImcyOTI1Ij48cGF0aAogICAgICAgICAgICAgICBpZD0icGF0aDI5MjciCiAgICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiM1YzVkNWQ7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICAgIGQ9Im0gMCwwIGMgMC4yODgsMS40MTggLTMuNDUyLDIuMzMyIC00LjAzOCwyLjExMyAtMC41ODcsLTAuMjE4IC0yLjMzMSwtMi45MzMgLTEuODI3LC00LjI5IDAuNTAyLC0xLjM1OCAyLjAxMiwxLjA4OCAzLjYzNCwxLjY5MiBDIC0wLjYxMywwLjExNSAtMC4xMjMsLTAuNjAxIDAsMCIgLz48L2c+PGcKICAgICAgICAgICAgIHRyYW5zZm9ybT0idHJhbnNsYXRlKDIxNS41ODY5LDI4OS40NzEyKSIKICAgICAgICAgICAgIGlkPSJnMjkyOSI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyOTMxIgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojZmZmZmZmO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJNIDAsMCBDIDAuMTgxLDAuMTM2IDAuMzY1LDAuNDE1IDAuMjk3LDAuMzg3IDAuNTA2LDAuNzkgMC41MjcsMS4yODQgMC4zMDUsMS43MTggLTAuMDU5LDIuNDMzIC0wLjkzNywyLjcyIC0xLjY1MiwyLjM1NCAtMi4zNjksMS45OSAtMi42NTIsMS4xMTIgLTIuMjg2LDAuMzk2IC0yLjI4NCwwLjM5MiAtMi4yODEsMC4zODkgLTIuMjc5LDAuMzg1IC0yLjM1LDAuNDE0IC0yLjQyMywwLjQyNSAtMi40OTIsMC40NTkgLTMuOTk1LDEuMTg5IC00LjczNCwyLjg2NSAtNC4zMzcsNC40MjUgLTQuNDcsNC4yNTMgLTQuNTg4LDQuMDY2IC00LjY4OCwzLjg2NSAtNS40NDUsMi4zMDcgLTQuNzkzLDAuNDMxIC0zLjIzNiwtMC4zMjQgYyAwLjksLTAuNDM5IDEuOSwtMC4zOTIgMi43MzMsMC4wMTcgMC4wNTgsMC4wMjEgMC4xMTcsMC4wMzkgMC4xNzQsMC4wNjggQyAtMC4yMDQsLTAuMTc1IC0wLjA5OCwtMC4wOTEgMCwwIiAvPjwvZz48ZwogICAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjAxLjM0NjcsMjg2Ljc5KSIKICAgICAgICAgICAgIGlkPSJnMjkzMyI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgyOTM1IgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojZjZhZDQ0O2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJtIDAsMCBjIDAsMCA0LjY0OSwtOC4wMTIgMTcuMDk4LC01LjcyOCAwLDAgOC42NDYsMi4zMDYgMTMuNjYxLC0yLjU3MiAtMS4wMjMsMC45OTUgLTEuOTEyLDIuMDM3IC0zLjE1OSwyLjggLTMuODgsMi4zNzQgLTguNDI1LDEuNTg2IC0xMi43NCwyLjAwNyBDIDExLjcyOSwtMy4xODYgOC44MTQsLTIuMTI5IDYuMDEyLC0wLjc0IDQuOTk3LC0wLjIzNyAtMC41NDMsMy4zMjMgMCwwIiAvPjwvZz48ZwogICAgICAgICAgICAgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMjU0LjQ5MDcsMzExLjgyNTcpIgogICAgICAgICAgICAgaWQ9ImcyOTM3Ij48cGF0aAogICAgICAgICAgICAgICBpZD0icGF0aDI5MzkiCiAgICAgICAgICAgICAgIHN0eWxlPSJmaWxsOiNmNmFkNDQ7ZmlsbC1vcGFjaXR5OjE7ZmlsbC1ydWxlOm5vbnplcm87c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICAgIGQ9Im0gMCwwIGMgMCwwIDIuOTUzLC04LjczOSAtNy4xODksLTE1LjA4NyAwLDAgLTUuNjU5LC00LjczNSAtNS40MDgsLTExLjYzNSAtMC4wNTEsMS40MDYgLTAuMjExLDIuNzU3IDAuMDIxLDQuMTUgMC4zODUsMi4zMTggMC40NjYsNC43OSAxLjM4OCw2Ljk0NCAwLjg5LDIuMDggMi43NzUsMy4xNzkgNC4yNDEsNC43NDcgMS42NTMsMS43NjggMi43MzMsNC4wMDggMy4zNDQsNi40MTcgQyAtMy4zMzYsLTMuNDE2IC0xLjg1NCwyLjc2NSAwLDAiIC8+PC9nPjwvZz48L2c+PGcKICAgICAgICAgaWQ9ImcyOTQxIj48ZwogICAgICAgICAgIGlkPSJnMjk0MyI+PGcKICAgICAgICAgICAgIGlkPSJnMjk0OSI+PGcKICAgICAgICAgICAgICAgaWQ9ImcyOTUxIj48cGF0aAogICAgICAgICAgICAgICAgIGlkPSJwYXRoMjk1OSIKICAgICAgICAgICAgICAgICBzdHlsZT0iZmlsbDp1cmwoI2xpbmVhckdyYWRpZW50MjkyMSk7c3Ryb2tlOm5vbmUiCiAgICAgICAgICAgICAgICAgZD0ibSAyMTkuMjE3LDMyMC41NTcgYyAtOC4zNjEsLTMuODE5IC0xMS4yNDUsLTcuODQzIC0xMC4xMiwtOS40NTUgbCAwLDAgYyAxLjIzMiwtMS43NjMgNi41NjQsLTMuOTc1IDEwLjQ2MiwtNC43MTYgbCAwLDAgYyAwLjQzNywtMC4wODQgMC42MTUsMC41NCAwLjc4OCwxLjE2NCBsIDAsMCBjIDAuMTc1LDAuNjI1IDAuMzQ1LDEuMjUxIDAuNzY5LDEuMTY0IGwgMCwwIGMgMi40OSwtMC41MTMgNS45NDcsLTMuODI2IDcuMTU0LC00Ljc4IGwgMCwwIGMgMC42MTUsLTAuNDg2IDEuNzc4LC0xLjUyNSAyLjMzNSwtMS4zMDYgbCAwLDAgYyAwLjQ0OCwwLjE4IC0wLjE3MSwxLjU0NCAtMC4yNywyLjU2NyBsIDAsMCBjIC0wLjEyOSwxLjM0IC0xLjI0LDYuNTA3IC0wLjc5OSw4LjQ1MyBsIDAsMCBjIDAuMTYsMC43MTEgMC42NywwLjYwNCAxLjE5MiwwLjQ5OCBsIDAsMCBjIDAuNTMsLTAuMTA5IDEuMDcxLC0wLjIxOSAxLjI2OCwwLjUzOCBsIDAsMCBjIDEuMDE4LDMuOTIxIDEuODk1LDcuNjY2IDAuNzQ5LDkuMjA2IGwgMCwwIGMgLTAuMjkyLDAuMzkzIC0wLjg2NSwwLjU3MSAtMS42NjQsMC41NzEgbCAwLDAgYyAtMi40MTQsMCAtNi44ODUsLTEuNjMgLTExLjg2NCwtMy45MDQiIC8+PC9nPjwvZz48L2c+PC9nPjxnCiAgICAgICAgIGlkPSJnMjk2MSI+PGcKICAgICAgICAgICBjbGlwLXBhdGg9InVybCgjY2xpcFBhdGgyOTY1KSIKICAgICAgICAgICBpZD0iZzI5NjMiPjxnCiAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNTAuNDg2OCwzMjEuMDIzNCkiCiAgICAgICAgICAgICBpZD0iZzMwMjUiPjxwYXRoCiAgICAgICAgICAgICAgIGlkPSJwYXRoMzAyNyIKICAgICAgICAgICAgICAgc3R5bGU9ImZpbGw6IzVjNWQ1ZDtmaWxsLW9wYWNpdHk6MTtmaWxsLXJ1bGU6bm9uemVybztzdHJva2U6bm9uZSIKICAgICAgICAgICAgICAgZD0ibSAwLDAgYyAtMS45NTMsLTMuMzk4IC0yLjEyLC03LjM5OCAtOS4xNjIsLTEyLjA1MSAtMS4zMzIsLTAuODggLTIuMTgxLC0xLjc4NyAtMi44NDgsLTMuNDIyIC0zLjIzOSwtNy45MzQgMi4wMzQsLTI1LjA2NiAyLjc2OCwtMjQuOTU2IDEuMTUyLDAuMzI1IC01LjYxNSwxNC42ODkgLTEuOTE2LDIxLjkyMyAwLjU5MiwxLjE1NyAxLjUxNiwyLjA3MyAyLjQzOCwyLjk2OCAwLjk4NCwwLjk1NyAxLjU1MSwxLjUxNyAyLjY0NywyLjMyNiAxLjE2MiwwLjg1NiAyLjY3NywyLjAzOCA0LjAzNywxLjk4MSAtMC45MSwwLjAzOCAtMi41MTcsMC40MyAtMy40MzIsMC40NjkgMC43MTcsMS4yMTggMi42NDUsMy4xODEgMy4xODIsNC4wMzEgMS4zMjgsMi4xIDEuOTIsNC4xOTIgMi4yODYsNi43MzEiIC8+PC9nPjxnCiAgICAgICAgICAgICB0cmFuc2Zvcm09InRyYW5zbGF0ZSgyNDUuNjIyMSwzMTEuMTY3KSIKICAgICAgICAgICAgIGlkPSJnMzAyOSI+PHBhdGgKICAgICAgICAgICAgICAgaWQ9InBhdGgzMDMxIgogICAgICAgICAgICAgICBzdHlsZT0iZmlsbDojNWM1ZDVkO2ZpbGwtb3BhY2l0eToxO2ZpbGwtcnVsZTpub256ZXJvO3N0cm9rZTpub25lIgogICAgICAgICAgICAgICBkPSJNIDAsMCBDIDAuODU4LDAuMjc1IDEuODc0LDAuODgxIDIuNjMyLDEuMzg5IDMuMzEzLDEuODQ2IDQuMDA2LDIuMzQ0IDQuMjUsMy4xMDYgMy44ODcsMS45NzIgMi45MzEsMC41ODggMS45OTQsLTAuMDU1IDEuNTE3LC0wLjM4MiAxLjAyOSwtMC43MDEgMC42MTcsLTEuMTExIDAuMjE2LC0xLjUwOSAtMC4xMTcsLTEuNDgyIC0wLjcxOCwtMS41OSAtMC43NjYsLTEuMzM3IC0wLjc1LC0xLjA3NSAtMC43NSwtMC44MTMiIC8+PC9nPjwvZz48L2c+PC9nPjwvZz48L3N2Zz4=
+      requestBody:
+        content:
+          application/x-www-form-urlencoded:
+            schema:
+              type: object
+              properties:
+                ? "------geckoformboundary4c8fc12942fc764e7be0d7aa74519b0b\r\nContent-Disposition:
+                  form-data; name"
+                : type: string
+            example:
+              ? "------geckoformboundary4c8fc12942fc764e7be0d7aa74519b0b\r\nContent-Disposition:
+                form-data; name"
+              : "\"file\"; filename=\"icon.svg\"\r\nContent-Type: image/svg xml\r\n
+                \r\n<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\"?>\n
+                <!-- Created with Inkscape (http://www.inkscape.org/) -->\n\n<svg\n\
+                \   xmlns:dc=\"http://purl.org/dc/elements/1.1/\"\n   xmlns:cc=\"\
+                http://creativecommons.org/ns#\"\n   xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"\
+                \n   xmlns:svg=\"http://www.w3.org/2000/svg\"\n   xmlns=\"http://www.w3.org/2000/svg\"\
+                \n   xmlns:xlink=\"http://www.w3.org/1999/xlink\"\n   xmlns:sodipodi=\"\
+                http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd\"\n   xmlns:inkscape=\"\
+                http://www.inkscape.org/namespaces/inkscape\"\n   id=\"svg2837\"\n\
+                \   version=\"1.1\"\n   inkscape:version=\"0.47pre4 r22446\"\n   width=\"\
+                48\"\n   height=\"48\"\n   viewBox=\"0 0 48 48\"\n   xml:space=\"\
+                preserve\"\n   sodipodi:docname=\"24x24.svg\"><metadata\n     id=\"\
+                metadata2843\"><rdf:RDF><cc:Work\n         rdf:about=\"\"><dc:format>image/svg
+                xml</dc:format><dc:type\n           rdf:resource=\"http://purl.org/dc/dcmitype/StillImage\"\
+                \ /><dc:title></dc:title></cc:Work></rdf:RDF></metadata><defs\n  \
+                \   id=\"defs2841\"><inkscape:perspective\n       sodipodi:type=\"\
+                inkscape:persp3d\"\n       inkscape:vp_x=\"0 : 0.5 : 1\"\n       inkscape:vp_y=\"\
+                0 : 1000 : 0\"\n       inkscape:vp_z=\"1 : 0.5 : 1\"\n       inkscape:persp3d-origin=\"\
+                0.5 : 0.33333333 : 1\"\n       id=\"perspective2845\" /><linearGradient\n\
+                \       x1=\"0\"\n       y1=\"0\"\n       x2=\"1\"\n       y2=\"0\"\
+                \n       gradientUnits=\"userSpaceOnUse\"\n       gradientTransform=\"\
+                matrix(-7.9998322,76.665482,76.665482,7.9998322,231.64795,260.98437)\"\
+                \n       spreadMethod=\"pad\"\n       id=\"linearGradient2861\"><stop\n\
+                \         style=\"stop-opacity:1;stop-color:#f89734\"\n         offset=\"\
+                0\"\n         id=\"stop2863\" /><stop\n         style=\"stop-opacity:1;stop-color:#fbb371\"\
+                \n         offset=\"1\"\n         id=\"stop2865\" /></linearGradient><radialGradient\n\
+                \       fx=\"0\"\n       fy=\"0\"\n       cx=\"0\"\n       cy=\"0\"\
+                \n       r=\"1\"\n       gradientUnits=\"userSpaceOnUse\"\n      \
+                \ gradientTransform=\"matrix(50.959351,23.761917,23.092804,-49.525528,208.03369,303.08252)\"\
+                \n       spreadMethod=\"pad\"\n       id=\"radialGradient2881\"><stop\n\
+                \         style=\"stop-opacity:1;stop-color:#e9eaeb\"\n         offset=\"\
+                0\"\n         id=\"stop2883\" /><stop\n         style=\"stop-opacity:1;stop-color:#838487\"\
+                \n         offset=\"1\"\n         id=\"stop2885\" /></radialGradient><clipPath\n\
+                \       clipPathUnits=\"userSpaceOnUse\"\n       id=\"clipPath2893\"\
+                ><path\n         d=\"M 0,576 576,576 576,0 0,0 0,576 z\"\n       \
+                \  id=\"path2895\" /></clipPath><linearGradient\n       x1=\"0\"\n\
+                \       y1=\"0\"\n       x2=\"1\"\n       y2=\"0\"\n       gradientUnits=\"\
+                userSpaceOnUse\"\n       gradientTransform=\"matrix(34.282654,-15.727585,-15.727585,-34.282654,213.80908,320.43213)\"\
+                \n       spreadMethod=\"pad\"\n       id=\"linearGradient2953\"><stop\n\
+                \         style=\"stop-opacity:1;stop-color:#faa858\"\n         offset=\"\
+                0\"\n         id=\"stop2955\" /><stop\n         style=\"stop-opacity:1;stop-color:#fbb371\"\
+                \n         offset=\"1\"\n         id=\"stop2957\" /></linearGradient><clipPath\n\
+                \       clipPathUnits=\"userSpaceOnUse\"\n       id=\"clipPath2965\"\
+                ><path\n         d=\"M 0,576 576,576 576,0 0,0 0,576 z\"\n       \
+                \  id=\"path2967\" /></clipPath><linearGradient\n       inkscape:collect=\"\
+                always\"\n       xlink:href=\"#linearGradient2861\"\n       id=\"\
+                linearGradient2917\"\n       gradientUnits=\"userSpaceOnUse\"\n  \
+                \     gradientTransform=\"matrix(-7.9998322,76.665482,76.665482,7.9998322,231.64795,260.98437)\"\
+                \n       spreadMethod=\"pad\"\n       x1=\"0\"\n       y1=\"0\"\n\
+                \       x2=\"1\"\n       y2=\"0\" /><radialGradient\n       inkscape:collect=\"\
+                always\"\n       xlink:href=\"#radialGradient2881\"\n       id=\"\
+                radialGradient2919\"\n       gradientUnits=\"userSpaceOnUse\"\n  \
+                \     gradientTransform=\"matrix(50.959351,23.761917,23.092804,-49.525528,208.03369,303.08252)\"\
+                \n       spreadMethod=\"pad\"\n       cx=\"0\"\n       cy=\"0\"\n\
+                \       fx=\"0\"\n       fy=\"0\"\n       r=\"1\" /><linearGradient\n\
+                \       inkscape:collect=\"always\"\n       xlink:href=\"#linearGradient2953\"\
+                \n       id=\"linearGradient2921\"\n       gradientUnits=\"userSpaceOnUse\"\
+                \n       gradientTransform=\"matrix(34.282654,-15.727585,-15.727585,-34.282654,213.80908,320.43213)\"\
+                \n       spreadMethod=\"pad\"\n       x1=\"0\"\n       y1=\"0\"\n\
+                \       x2=\"1\"\n       y2=\"0\" /></defs><sodipodi:namedview\n \
+                \    pagecolor=\"#ffffff\"\n     bordercolor=\"#666666\"\n     borderopacity=\"\
+                1\"\n     objecttolerance=\"10\"\n     gridtolerance=\"10\"\n    \
+                \ guidetolerance=\"10\"\n     inkscape:pageopacity=\"0\"\n     inkscape:pageshadow=\"\
+                2\"\n     inkscape:window-width=\"1152\"\n     inkscape:window-height=\"\
+                793\"\n     id=\"namedview2839\"\n     showgrid=\"false\"\n     inkscape:zoom=\"\
+                2.6222222\"\n     inkscape:cx=\"135.88584\"\n     inkscape:cy=\"27.404163\"\
+                \n     inkscape:window-x=\"0\"\n     inkscape:window-y=\"25\"\n  \
+                \   inkscape:window-maximized=\"1\"\n     inkscape:current-layer=\"\
+                g2847\"\n     inkscape:showpageshadow=\"false\"\n     showborder=\"\
+                false\" /><g\n     id=\"g2847\"\n     inkscape:groupmode=\"layer\"\
+                \n     inkscape:label=\"FOXYlogo\"\n     transform=\"matrix(1.25,0,0,-1.25,-224.11415,370.89237)\"\
+                ><g\n       id=\"g2870\"\n       transform=\"matrix(0.42687693,0,0,0.42687693,102.75599,148.99767)\"\
+                ><g\n         id=\"g2849\"><g\n           id=\"g2851\"><g\n      \
+                \       id=\"g2857\"><g\n               id=\"g2859\"><path\n     \
+                \            id=\"path2867\"\n                 style=\"fill:url(#linearGradient2917);stroke:none\"\
+                \n                 d=\"m 185.797,300.527 c 0,-22.396 18.681,-40.552
+                41.725,-40.552 l 0,0 c 23.044,0 41.725,18.156 41.725,40.552 l 0,0
+                c 0,22.397 -18.681,40.554 -41.725,40.554 l 0,0 c -23.044,0 -41.725,-18.157
+                -41.725,-40.554\" /></g></g></g></g><g\n         id=\"g2869\"><g\n\
+                \           id=\"g2871\"><g\n             id=\"g2877\"><g\n      \
+                \         id=\"g2879\"><path\n                 id=\"path2887\"\n \
+                \                style=\"fill:url(#radialGradient2919);stroke:none\"\
+                \n                 d=\"m 211.943,333.94 c -18.988,-8.854 -27.403,-30.99
+                -18.798,-49.443 l 0,0 c 8.604,-18.453 30.971,-26.234 49.958,-17.381
+                l 0,0 c 18.986,8.854 27.401,30.99 18.797,49.442 l 0,0 c -6.194,13.284
+                -19.518,21.037 -33.58,21.037 l 0,0 c -5.473,0 -11.058,-1.175 -16.377,-3.655\"\
+                \ /></g></g></g></g><g\n         id=\"g2889\"><g\n           clip-path=\"\
+                url(#clipPath2893)\"\n           id=\"g2891\"><g\n             transform=\"\
+                translate(261.9004,316.5576)\"\n             id=\"g2897\"><path\n\
+                \               id=\"path2899\"\n               style=\"fill:none;stroke:#ffffff;stroke-width:1.76999998;stroke-linecap:butt;stroke-linejoin:miter;stroke-miterlimit:4;stroke-opacity:1;stroke-dasharray:none\"\
+                \n               d=\"m 0,0 c 8.604,-18.451 0.188,-40.588 -18.798,-49.441
+                -18.986,-8.854 -41.353,-1.072 -49.958,17.38 -8.605,18.454 -0.189,40.589
+                18.798,49.443 C -30.972,26.235 -8.605,18.454 0,0 z\" /></g><g\n  \
+                \           transform=\"translate(253.9063,323.9209)\"\n         \
+                \    id=\"g2901\"><path\n               id=\"path2903\"\n        \
+                \       style=\"fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c -0.38,6.903 -1.854,15.334 -6.533,20.806
+                -3.507,4.103 -8.978,-7.857 -10.103,-9.669 -1.38,-2.221 -2.706,-4.984
+                -4.8,-6.605 -2.945,-2.281 -6.431,-2.372 -9.833,-3.499 -5.391,-1.789
+                -10.688,-4.57 -14.938,-8.369 -5.214,-4.66 -10.154,-4.124 -16.67,-3.649
+                -2.711,0.199 -12.849,2.406 -11.04,-3.348 2.192,-6.973 7.778,-12.852
+                13.386,-17.248 5.302,-4.158 2.946,-8.926 -2.589,-11.503 5.72,-7.829
+                17.267,-8.914 26.01,-7.4 4.766,0.826 9.278,1.088 14.039,-0.052 3.533,-0.845
+                7.752,-4.399 11.49,-2.507 3.506,1.711 3.098,5.748 4.096,8.94 1.409,4.499
+                4.193,8.567 7.519,11.858 6.812,6.743 14.138,16.589 10.803,26.9 C 5.155,-8.506
+                -0.189,-7.015 0,0\" /></g><g\n             transform=\"translate(215.7368,321.6992)\"\
+                \n             id=\"g2905\"><path\n               id=\"path2907\"\n\
+                \               style=\"fill:#f89734;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 0,0 11.985,5.765 21.784,5.146 0,0 7.573,-2.107
+                11.927,-4.1 0,0 6.191,-4.964 7.201,-8.663 0,0 2.938,-8.511 -7.186,-19.298
+                0,0 -5.095,-6.523 -6.302,-12.757 0,0 -0.092,-4.189 -2.53,-5.651 0,0
+                -4.019,-1.141 -6.971,0.514 -2.393,0.678 -4.844,1.214 -7.298,1.626
+                -5.684,0.954 -11.46,0.006 -17.159,1.061 -4.659,0.859 -10.534,2.956
+                -11.796,8.135 0,0 -2.888,2.565 0.798,13.578 0,0 2.001,12.357 17.532,20.409\"\
+                \ /></g><g\n             transform=\"translate(196.5059,295.9878)\"\
+                \n             id=\"g2909\"><path\n               id=\"path2911\"\n\
+                \               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 2.679,-1.011 4.179,-2.636 10.782,-1.915
+                3.055,0.334 5.723,3.269 8.877,2.476 8.535,-2.152 22.752,-17.621 22.222,-18.163
+                -0.955,-0.761 -11.555,14.2 -19.136,10.842 -1.809,-0.8 -4.551,-2.507
+                -6.534,-2.023 -0.958,0.237 -1.792,0.686 -2.52,1.358 -0.96,0.89 -1.642,2.731
+                -2.91,3.235 -1.728,0.688 -3.12,0.784 -4.914,1.167 -1.929,0.412 -3.938,1.262
+                -5.436,2.518\" /></g><g\n             transform=\"translate(243.0967,279.8789)\"\
+                \n             id=\"g2913\"><path\n               id=\"path2915\"\n\
+                \               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 0.714,-1.26 -0.438,-4.142 -0.984,-4.45
+                -0.544,-0.309 -3.745,0.106 -4.459,1.367 -0.713,1.258 0.327,2.263 1.83,3.114
+                C -2.109,0.883 -0.713,1.259 0,0\" /></g><g\n             transform=\"\
+                translate(206.8965,302.1777)\"\n             id=\"g2917\"><path\n\
+                \               id=\"path2919\"\n               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"M 0,0 C -0.872,1.155 2.11,3.59 2.733,3.646 3.357,3.701
+                6.101,2.003 6.231,0.562 6.361,-0.879 3.944,0.677 2.223,0.523 0.502,0.367
+                0.369,-0.49 0,0\" /></g><g\n             transform=\"translate(262.0864,311.4141)\"\
+                \n             id=\"g2921\"><path\n               id=\"path2923\"\n\
+                \               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c -0.677,-9.71 -5.16,-14.594 -10.862,-21.908
+                -3.012,-3.861 -5.017,-8.005 -6.067,-12.766 -0.653,-2.955 -2.998,-5.396
+                -6.187,-5.296 -3.564,0.114 -6.928,2.23 -10.487,2.862 -4.641,0.826
+                -9.162,0.113 -13.801,-0.206 -4.671,-0.321 -8.985,0.475 -13.127,2.686
+                -0.069,0.036 -6.823,4.403 -6.476,4.649 4.916,3.463 2.528,8.458 -1.511,11.371
+                -5.349,3.857 -10.603,10.055 -12.841,16.365 -1.254,3.539 12.776,0.416
+                14.245,-0.23 4.956,-2.182 2.184,-9.504 1.431,-13.29 1.562,1.982 1.916,4.999
+                2.747,7.338 1.244,3.501 2.716,7.061 5.389,9.728 3.419,3.415 7.537,5.966
+                11.82,8.15 5.051,2.578 9.983,4.83 15.651,5.436 4.155,0.441 7.829,-0.055
+                11.682,-1.675 0.621,-0.264 4.807,-2.148 5.815,-1.898 -3.393,1.208
+                -10.569,4.446 -9.555,9.164 0.338,1.567 5.62,14.545 7.748,11.455 3.797,-5.514
+                5.733,-13.408 5.718,-20.002 C -8.68,6.954 -6.037,2.089 -0.348,4.037
+                -0.384,4.025 0.028,0.412 0,0 m -7.915,12.749 c -0.384,6.973 -1.874,15.488
+                -6.598,21.016 -3.544,4.145 -9.07,-7.937 -10.206,-9.767 -1.394,-2.243
+                -2.732,-5.033 -4.849,-6.672 -2.974,-2.305 -6.495,-2.395 -9.931,-3.535
+                -5.446,-1.808 -10.797,-4.617 -15.089,-8.453 -5.267,-4.707 -10.258,-4.165
+                -16.839,-3.686 -2.739,0.201 -12.979,2.429 -11.151,-3.382 2.213,-7.042
+                7.856,-12.98 13.52,-17.421 5.355,-4.199 2.976,-9.016 -2.615,-11.62
+                5.778,-7.908 17.443,-9.004 26.273,-7.474 4.815,0.834 9.372,1.096 14.18,-0.054
+                3.57,-0.851 7.831,-4.442 11.607,-2.531 3.541,1.728 3.129,5.806 4.139,9.031
+                1.422,4.543 4.234,8.652 7.594,11.977 C -1,-13.011 6.4,-3.065 3.032,7.352
+                -2.708,4.155 -8.107,5.663 -7.915,12.749\" /></g><g\n             transform=\"\
+                translate(240.9268,311.4058)\"\n             id=\"g2925\"><path\n\
+                \               id=\"path2927\"\n               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 0.288,1.418 -3.452,2.332 -4.038,2.113
+                -0.587,-0.218 -2.331,-2.933 -1.827,-4.29 0.502,-1.358 2.012,1.088
+                3.634,1.692 C -0.613,0.115 -0.123,-0.601 0,0\" /></g><g\n        \
+                \     transform=\"translate(215.5869,289.4712)\"\n             id=\"\
+                g2929\"><path\n               id=\"path2931\"\n               style=\"\
+                fill:#ffffff;fill-opacity:1;fill-rule:nonzero;stroke:none\"\n    \
+                \           d=\"M 0,0 C 0.181,0.136 0.365,0.415 0.297,0.387 0.506,0.79
+                0.527,1.284 0.305,1.718 -0.059,2.433 -0.937,2.72 -1.652,2.354 -2.369,1.99
+                -2.652,1.112 -2.286,0.396 -2.284,0.392 -2.281,0.389 -2.279,0.385 -2.35,0.414
+                -2.423,0.425 -2.492,0.459 -3.995,1.189 -4.734,2.865 -4.337,4.425 -4.47,4.253
+                -4.588,4.066 -4.688,3.865 -5.445,2.307 -4.793,0.431 -3.236,-0.324
+                c 0.9,-0.439 1.9,-0.392 2.733,0.017 0.058,0.021 0.117,0.039 0.174,0.068
+                C -0.204,-0.175 -0.098,-0.091 0,0\" /></g><g\n             transform=\"\
+                translate(201.3467,286.79)\"\n             id=\"g2933\"><path\n  \
+                \             id=\"path2935\"\n               style=\"fill:#f6ad44;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 0,0 4.649,-8.012 17.098,-5.728 0,0 8.646,2.306
+                13.661,-2.572 -1.023,0.995 -1.912,2.037 -3.159,2.8 -3.88,2.374 -8.425,1.586
+                -12.74,2.007 C 11.729,-3.186 8.814,-2.129 6.012,-0.74 4.997,-0.237
+                -0.543,3.323 0,0\" /></g><g\n             transform=\"translate(254.4907,311.8257)\"\
+                \n             id=\"g2937\"><path\n               id=\"path2939\"\n\
+                \               style=\"fill:#f6ad44;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c 0,0 2.953,-8.739 -7.189,-15.087 0,0 -5.659,-4.735
+                -5.408,-11.635 -0.051,1.406 -0.211,2.757 0.021,4.15 0.385,2.318 0.466,4.79
+                1.388,6.944 0.89,2.08 2.775,3.179 4.241,4.747 1.653,1.768 2.733,4.008
+                3.344,6.417 C -3.336,-3.416 -1.854,2.765 0,0\" /></g></g></g><g\n\
+                \         id=\"g2941\"><g\n           id=\"g2943\"><g\n          \
+                \   id=\"g2949\"><g\n               id=\"g2951\"><path\n         \
+                \        id=\"path2959\"\n                 style=\"fill:url(#linearGradient2921);stroke:none\"\
+                \n                 d=\"m 219.217,320.557 c -8.361,-3.819 -11.245,-7.843
+                -10.12,-9.455 l 0,0 c 1.232,-1.763 6.564,-3.975 10.462,-4.716 l 0,0
+                c 0.437,-0.084 0.615,0.54 0.788,1.164 l 0,0 c 0.175,0.625 0.345,1.251
+                0.769,1.164 l 0,0 c 2.49,-0.513 5.947,-3.826 7.154,-4.78 l 0,0 c 0.615,-0.486
+                1.778,-1.525 2.335,-1.306 l 0,0 c 0.448,0.18 -0.171,1.544 -0.27,2.567
+                l 0,0 c -0.129,1.34 -1.24,6.507 -0.799,8.453 l 0,0 c 0.16,0.711 0.67,0.604
+                1.192,0.498 l 0,0 c 0.53,-0.109 1.071,-0.219 1.268,0.538 l 0,0 c 1.018,3.921
+                1.895,7.666 0.749,9.206 l 0,0 c -0.292,0.393 -0.865,0.571 -1.664,0.571
+                l 0,0 c -2.414,0 -6.885,-1.63 -11.864,-3.904\" /></g></g></g></g><g\n\
+                \         id=\"g2961\"><g\n           clip-path=\"url(#clipPath2965)\"\
+                \n           id=\"g2963\"><g\n             transform=\"translate(250.4868,321.0234)\"\
+                \n             id=\"g3025\"><path\n               id=\"path3027\"\n\
+                \               style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"m 0,0 c -1.953,-3.398 -2.12,-7.398 -9.162,-12.051
+                -1.332,-0.88 -2.181,-1.787 -2.848,-3.422 -3.239,-7.934 2.034,-25.066
+                2.768,-24.956 1.152,0.325 -5.615,14.689 -1.916,21.923 0.592,1.157
+                1.516,2.073 2.438,2.968 0.984,0.957 1.551,1.517 2.647,2.326 1.162,0.856
+                2.677,2.038 4.037,1.981 -0.91,0.038 -2.517,0.43 -3.432,0.469 0.717,1.218
+                2.645,3.181 3.182,4.031 1.328,2.1 1.92,4.192 2.286,6.731\" /></g><g\n\
+                \             transform=\"translate(245.6221,311.167)\"\n        \
+                \     id=\"g3029\"><path\n               id=\"path3031\"\n       \
+                \        style=\"fill:#5c5d5d;fill-opacity:1;fill-rule:nonzero;stroke:none\"\
+                \n               d=\"M 0,0 C 0.858,0.275 1.874,0.881 2.632,1.389 3.313,1.846
+                4.006,2.344 4.25,3.106 3.887,1.972 2.931,0.588 1.994,-0.055 1.517,-0.382
+                1.029,-0.701 0.617,-1.111 0.216,-1.509 -0.117,-1.482 -0.718,-1.59
+                -0.766,-1.337 -0.75,-1.075 -0.75,-0.813\" /></g></g></g></g></g></svg>\r\
+                \n------geckoformboundary4c8fc12942fc764e7be0d7aa74519b0b--\r\n"
+  /identity/api/v2/user/reset-password:
+    post:
+      summary: POST reset-password
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: Password reset successful.
+                status: 0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                password:
+                  type: string
+            example:
+              password: Test#12345678
+  /identity/api/v2/vehicle/vehicles:
+    get:
+      summary: GET vehicles
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: array
+                items: {}
+              example: []
+  /identity/api/v2/vehicle/add_vehicle:
+    post:
+      summary: POST add_vehicle
+      responses:
+        '403':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: Sorry, This Vehicle is already added.
+                status: 403
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: Vehicle save successfully..
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                vin:
+                  type: string
+                pincode:
+                  type: string
+            example:
+              vin: V2348892373372278
+              pincode: '1234'
+  /workshop/api/shop/products:
+    get:
+      summary: GET products
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  products:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        name:
+                          type: string
+                        price:
+                          type: string
+                        image_url:
+                          type: string
+                  credit:
+                    type: number
+                  next_offset:
+                    type: object
+                    nullable: true
+                  previous_offset:
+                    type: object
+                    nullable: true
+                  count:
+                    type: number
+              example:
+                products:
+                - id: 2
+                  name: Wheel
+                  price: '10.00'
+                  image_url: images/wheel.svg
+                - id: 1
+                  name: Seat
+                  price: '10.00'
+                  image_url: images/seat.svg
+                credit: 100.0
+                next_offset:
+                previous_offset:
+                count: 2
+      parameters:
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: number
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: number
+  /workshop/api/shop/orders:
+    post:
+      summary: POST orders
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: number
+                  message:
+                    type: string
+                  credit:
+                    type: number
+              example:
+                id: 6
+                message: Order sent successfully.
+                credit: 90.0
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                product_id:
+                  type: number
+                quantity:
+                  type: number
+            example:
+              product_id: 2
+              quantity: 1
+  /workshop/api/shop/orders/{id}:
+    get:
+      summary: GET orders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  orders:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        user:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            number:
+                              type: string
+                        product:
+                          type: object
+                          properties:
+                            id:
+                              type: number
+                            name:
+                              type: string
+                            price:
+                              type: string
+                            image_url:
+                              type: string
+                        quantity:
+                          type: number
+                        status:
+                          type: string
+                        transaction_id:
+                          type: string
+                        created_on:
+                          type: string
+                  next_offset:
+                    type: object
+                    nullable: true
+                  previous_offset:
+                    type: object
+                    nullable: true
+                  count:
+                    type: number
+              example:
+                orders:
+                - id: 6
+                  user:
+                    email: user@test.com
+                    number: '0786543898'
+                  product:
+                    id: 2
+                    name: Wheel
+                    price: '10.00'
+                    image_url: images/wheel.svg
+                  quantity: 1
+                  status: delivered
+                  transaction_id: db9d153c-32a0-4f98-858e-122dbe1eff33
+                  created_on: '2026-05-31T07:56:30.286611'
+                next_offset:
+                previous_offset:
+                count: 1
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        schema:
+          type: number
+      - name: offset
+        in: query
+        required: false
+        schema:
+          type: number
+    post:
+      summary: POST orders by id
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  qr_code_url:
+                    type: string
+                  order:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      user:
+                        type: object
+                        properties:
+                          email:
+                            type: string
+                          number:
+                            type: string
+                      product:
+                        type: object
+                        properties:
+                          id:
+                            type: number
+                          name:
+                            type: string
+                          price:
+                            type: string
+                          image_url:
+                            type: string
+                      quantity:
+                        type: number
+                      status:
+                        type: string
+                      transaction_id:
+                        type: string
+                      created_on:
+                        type: string
+              example:
+                message: Please use the following QR code to return your order to
+                  a UPS store!
+                qr_code_url: http://crapi.com:8888/workshop/api/shop/return_qr_code
+                order:
+                  id: 6
+                  user:
+                    email: user@test.com
+                    number: '0786543898'
+                  product:
+                    id: 2
+                    name: Wheel
+                    price: '10.00'
+                    image_url: images/wheel.svg
+                  quantity: 1
+                  status: return pending
+                  transaction_id: db9d153c-32a0-4f98-858e-122dbe1eff33
+                  created_on: '2026-05-31T07:56:30.286611'
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+      - name: order_id
+        in: query
+        required: false
+        schema:
+          type: number
+  /workshop/api/shop/return_qr_code:
+    get:
+      summary: GET return_qr_code
+      responses:
+        '200':
+          description: OK
+          content: {}
+  /workshop/api/merchant/service_requests/ZL7H92WK9C4AL3Z53:
+    get:
+      summary: GET zl7h92wk9c4al3z53
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  service_requests:
+                    type: array
+                    items: {}
+                  next_offset:
+                    type: object
+                    nullable: true
+                  previous_offset:
+                    type: object
+                    nullable: true
+                  count:
+                    type: number
+              example:
+                service_requests: []
+                next_offset:
+                previous_offset:
+                count: 0
+  /workshop/api/mechanic:
+    get:
+      summary: GET mechanic
+      responses:
+        '200':
+          description: OK
+          content: {}
+  /workshop/api/mechanic/:
+    get:
+      summary: GET mechanic
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  mechanics:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: number
+                        mechanic_code:
+                          type: string
+                        user:
+                          type: object
+                          properties:
+                            email:
+                              type: string
+                            number:
+                              type: string
+                  previous_offset:
+                    type: object
+                    nullable: true
+                  next_offset:
+                    type: object
+                    nullable: true
+              example:
+                mechanics:
+                - id: 1
+                  mechanic_code: TRAC_JHN
+                  user:
+                    email: jhon@example.com
+                    number: ''
+                - id: 2
+                  mechanic_code: TRAC_JME
+                  user:
+                    email: james@example.com
+                    number: ''
+                previous_offset:
+                next_offset:
+  /workshop/api/merchant/contact_mechanic:
+    post:
+      summary: POST contact_mechanic
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  response_from_mechanic_api:
+                    type: object
+                    properties:
+                      id:
+                        type: number
+                      sent:
+                        type: boolean
+                      report_link:
+                        type: string
+                  status:
+                    type: number
+              example:
+                response_from_mechanic_api:
+                  id: 6
+                  sent: true
+                  report_link: http://crapi.com:8888/workshop/api/mechanic/mechanic_report?report_id=6
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                mechanic_code:
+                  type: string
+                problem_details:
+                  type: string
+                vin:
+                  type: string
+                mechanic_api:
+                  type: string
+                repeat_request_if_failed:
+                  type: boolean
+                number_of_repeats:
+                  type: number
+            example:
+              mechanic_code: TRAC_JHN
+              problem_details: This is a problem
+              vin: ZL7H92WK9C4AL3Z53
+              mechanic_api: http://crapi.com:8888/workshop/api/mechanic/receive_report
+              repeat_request_if_failed: false
+              number_of_repeats: 1
+  /identity/api/v2/user/videos/{id}:
+    get:
+      summary: GET videos by id
+      responses:
+        '404':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: Video not found.
+                status: 404
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: string
+  /identity/api/v2/user/verify-phone-otp:
+    post:
+      summary: POST verify-phone-otp
+      responses:
+        '200':
+          description: ''
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  status:
+                    type: number
+              example:
+                message: Phone number change is successful
+                status: 200
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                old_number:
+                  type: string
+                new_number:
+                  type: string
+                otp:
+                  type: string
+            example:
+              old_number: '0786543898'
+              new_number: '0467366272'
+              otp: '2567'
 x-path-templates:
 # Remove the ignore: prefix to generate an endpoint with its URL
 # Lines that are closer to the top take precedence, the matching is greedy
@@ -36,64 +1403,22 @@ x-path-templates:
 - ignore::8025/js/strutil.js
 - ignore::8888/%F0%9F%A4%96
 - ignore::8888/chatbot/genai/state
-- /community/api/v2/community/posts
-- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa
-- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa/comment
-- /community/api/v2/community/posts/recent
-- /community/api/v2/coupon/validate-coupon
-- /identity/api/auth/login
-- /identity/api/auth/signup
-- /identity/api/auth/verify
-- /identity/api/v2/user/change-email
-- /identity/api/v2/user/change-phone-number
-- /identity/api/v2/user/dashboard
-- /identity/api/v2/user/pictures
-- /identity/api/v2/user/reset-password
-- /identity/api/v2/user/verify-email-token
-- /identity/api/v2/user/verify-phone-otp
-- /identity/api/v2/user/videos/{id}
 - /identity/api/v2/user/videos/0
-- /identity/api/v2/vehicle/add_vehicle
-- /identity/api/v2/vehicle/vehicles
+- ignore::8888/images/audi-rs7.jpg
+- ignore::8888/images/favicon.ico
+- ignore::8888/images/logo192.png
 - ignore::8888/images/seat.svg
 - ignore::8888/images/wheel.svg
-- /login
+- ignore::8888/login
 - ignore::8888/static/css/main.dd33429d.css
 - ignore::8888/static/js/main.8c78208c.js
 - ignore::8888/static/media/chatbot.a61725c2f5501ec93ec086b78faf4499.svg
 - ignore::8888/static/media/default_profile_pic.ef3972048d3c6a3e08d1.png
-- /workshop/api/mechanic
-- /workshop/api/mechanic/
-- /workshop/api/merchant/contact_mechanic
-- /workshop/api/merchant/service_requests/ZL7H92WK9C4AL3Z53
-- /workshop/api/shop/orders
-- /workshop/api/shop/orders/{id}
 - /workshop/api/shop/orders/6
 - /workshop/api/shop/orders/all
 - /workshop/api/shop/orders/return_order
-- /workshop/api/shop/products
-- /workshop/api/shop/return_qr_code
 - ignore:/%F0%9F%A4%96
 - ignore:/chatbot/genai/state
-- /community/api/v2/community/posts
-- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa
-- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa/comment
-- /community/api/v2/community/posts/recent
-- /community/api/v2/coupon/validate-coupon
-- /identity/api/auth/login
-- /identity/api/auth/signup
-- /identity/api/auth/verify
-- /identity/api/v2/user/change-email
-- /identity/api/v2/user/change-phone-number
-- /identity/api/v2/user/dashboard
-- /identity/api/v2/user/pictures
-- /identity/api/v2/user/reset-password
-- /identity/api/v2/user/verify-email-token
-- /identity/api/v2/user/verify-phone-otp
-- /identity/api/v2/user/videos/{id}
-- /identity/api/v2/user/videos/0
-- /identity/api/v2/vehicle/add_vehicle
-- /identity/api/v2/vehicle/vehicles
 - ignore:/images/audi-rs7.jpg
 - ignore:/images/favicon.ico
 - ignore:/images/logo192.png
@@ -104,14 +1429,3 @@ x-path-templates:
 - ignore:/static/js/main.8c78208c.js
 - ignore:/static/media/chatbot.a61725c2f5501ec93ec086b78faf4499.svg
 - ignore:/static/media/default_profile_pic.ef3972048d3c6a3e08d1.png
-- /workshop/api/mechanic
-- /workshop/api/mechanic/
-- /workshop/api/merchant/contact_mechanic
-- /workshop/api/merchant/service_requests/ZL7H92WK9C4AL3Z53
-- /workshop/api/shop/orders
-- /workshop/api/shop/orders/{id}
-- /workshop/api/shop/orders/6
-- /workshop/api/shop/orders/all
-- /workshop/api/shop/orders/return_order
-- /workshop/api/shop/products
-- /workshop/api/shop/return_qr_code
