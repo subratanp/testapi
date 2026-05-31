@@ -1,0 +1,117 @@
+openapi: 3.0.0
+info:
+  title: Downloads/flows Mitmproxy2Swagger
+  version: 1.0.0
+servers:
+- url: http://crapi.com
+  description: The default server
+- url: http://crapi.com:8888
+  description: The default server
+paths: {}
+x-path-templates:
+# Remove the ignore: prefix to generate an endpoint with its URL
+# Lines that are closer to the top take precedence, the matching is greedy
+- ignore::8025/
+- ignore::8025/api/v1/messages/-WdBU0k-upNI3u5TP9TTItuL3AG2Aw6yh1-PRLvHLhw=@mailhog.example
+- ignore::8025/api/v1/messages/2dBNlj6Vs9O5RiEd4PVAgl4YoWIW03meA0oSoTG5Geg=@mailhog.example
+- ignore::8025/api/v1/messages/50w8BbUlkJLvdz2AqB47Bgjf3IzyHT5nmPgT6l_998I=@mailhog.example
+- ignore::8025/api/v1/messages/LIe0wE7y38Hm7vsKqsSVXYFLMXkaRZagKefu09qhlns=@mailhog.example
+- ignore::8025/api/v1/messages/o50sN4NzLipPmmR6CcRf7TikNHb-rI9Vw3j7uSC-uhk=@mailhog.example
+- ignore::8025/api/v2/jim
+- ignore::8025/api/v2/messages
+- ignore::8025/api/v2/websocket
+- ignore::8025/css/bootstrap-3.3.2.min.css
+- ignore::8025/css/jquery-ui-1.10.4-smoothness.css
+- ignore::8025/css/style.css
+- ignore::8025/fonts/glyphicons-halflings-regular.woff2
+- ignore::8025/images/github.png
+- ignore::8025/images/hog.png
+- ignore::8025/js/angular-1.3.8.js
+- ignore::8025/js/bootstrap-3.3.2.min.js
+- ignore::8025/js/controllers.js
+- ignore::8025/js/filesize-3.1.2.min.js
+- ignore::8025/js/jquery-1.11.0.min.js
+- ignore::8025/js/jquery-ui-1.10.4.min.js
+- ignore::8025/js/moment-2.8.4.js
+- ignore::8025/js/strutil.js
+- ignore::8888/%F0%9F%A4%96
+- ignore::8888/chatbot/genai/state
+- /community/api/v2/community/posts
+- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa
+- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa/comment
+- /community/api/v2/community/posts/recent
+- /community/api/v2/coupon/validate-coupon
+- /identity/api/auth/login
+- /identity/api/auth/signup
+- /identity/api/auth/verify
+- /identity/api/v2/user/change-email
+- /identity/api/v2/user/change-phone-number
+- /identity/api/v2/user/dashboard
+- /identity/api/v2/user/pictures
+- /identity/api/v2/user/reset-password
+- /identity/api/v2/user/verify-email-token
+- /identity/api/v2/user/verify-phone-otp
+- /identity/api/v2/user/videos/{id}
+- /identity/api/v2/user/videos/0
+- /identity/api/v2/vehicle/add_vehicle
+- /identity/api/v2/vehicle/vehicles
+- ignore::8888/images/seat.svg
+- ignore::8888/images/wheel.svg
+- /login
+- ignore::8888/static/css/main.dd33429d.css
+- ignore::8888/static/js/main.8c78208c.js
+- ignore::8888/static/media/chatbot.a61725c2f5501ec93ec086b78faf4499.svg
+- ignore::8888/static/media/default_profile_pic.ef3972048d3c6a3e08d1.png
+- /workshop/api/mechanic
+- /workshop/api/mechanic/
+- /workshop/api/merchant/contact_mechanic
+- /workshop/api/merchant/service_requests/ZL7H92WK9C4AL3Z53
+- /workshop/api/shop/orders
+- /workshop/api/shop/orders/{id}
+- /workshop/api/shop/orders/6
+- /workshop/api/shop/orders/all
+- /workshop/api/shop/orders/return_order
+- /workshop/api/shop/products
+- /workshop/api/shop/return_qr_code
+- ignore:/%F0%9F%A4%96
+- ignore:/chatbot/genai/state
+- /community/api/v2/community/posts
+- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa
+- /community/api/v2/community/posts/3723SBKqV4tUMKjAePEcNa/comment
+- /community/api/v2/community/posts/recent
+- /community/api/v2/coupon/validate-coupon
+- /identity/api/auth/login
+- /identity/api/auth/signup
+- /identity/api/auth/verify
+- /identity/api/v2/user/change-email
+- /identity/api/v2/user/change-phone-number
+- /identity/api/v2/user/dashboard
+- /identity/api/v2/user/pictures
+- /identity/api/v2/user/reset-password
+- /identity/api/v2/user/verify-email-token
+- /identity/api/v2/user/verify-phone-otp
+- /identity/api/v2/user/videos/{id}
+- /identity/api/v2/user/videos/0
+- /identity/api/v2/vehicle/add_vehicle
+- /identity/api/v2/vehicle/vehicles
+- ignore:/images/audi-rs7.jpg
+- ignore:/images/favicon.ico
+- ignore:/images/logo192.png
+- ignore:/images/seat.svg
+- ignore:/images/wheel.svg
+- ignore:/login
+- ignore:/static/css/main.dd33429d.css
+- ignore:/static/js/main.8c78208c.js
+- ignore:/static/media/chatbot.a61725c2f5501ec93ec086b78faf4499.svg
+- ignore:/static/media/default_profile_pic.ef3972048d3c6a3e08d1.png
+- /workshop/api/mechanic
+- /workshop/api/mechanic/
+- /workshop/api/merchant/contact_mechanic
+- /workshop/api/merchant/service_requests/ZL7H92WK9C4AL3Z53
+- /workshop/api/shop/orders
+- /workshop/api/shop/orders/{id}
+- /workshop/api/shop/orders/6
+- /workshop/api/shop/orders/all
+- /workshop/api/shop/orders/return_order
+- /workshop/api/shop/products
+- /workshop/api/shop/return_qr_code
